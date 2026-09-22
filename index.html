@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- ANIMATED BACKGROUND -->
+    <canvas id="canvas"></canvas>
+
     <nav class="navbar">
         <div class="nav-content">
             <div class="logo">Shaikh Sarim.seo</div>
@@ -82,4 +85,202 @@
                 <p class="meta">Karachi, Pakistan • June 2025 - Present</p>
                 <ul>
                     <li>Developed and executed comprehensive on-page, off-page, and technical SEO strategies that meaningfully increased organic search rankings and overall website visibility.</li>
-                    <li>Conducted deep keyword research and competitive analysis
+                    <li>Conducted deep keyword research and competitive analysis using SEMrush and Ahrefs to identify high-intent commercial keywords.</li>
+                    <li>Optimized website structure, metadata, and internal linking to improve crawlability and user experience.</li>
+                    <li>Built sustainable backlink strategy through guest posting and digital PR outreach.</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="skills">
+        <div class="content-wrapper">
+            <h2>What I <span class="highlight">work with.</span></h2>
+            
+            <div class="skills-section">
+                <h4>SEO Expertise</h4>
+                <div class="skill-tags">
+                    <span class="tag">Technical SEO</span>
+                    <span class="tag">On-Page SEO</span>
+                    <span class="tag">Off-Page SEO</span>
+                    <span class="tag">Keyword Research</span>
+                    <span class="tag">Link Building</span>
+                    <span class="tag">Site Audits</span>
+                </div>
+            </div>
+
+            <div class="skills-section">
+                <h4>Tools & Platforms</h4>
+                <div class="skill-tags">
+                    <span class="tag">Google Search Console</span>
+                    <span class="tag">Google Analytics 4</span>
+                    <span class="tag">SEMrush</span>
+                    <span class="tag">Ahrefs</span>
+                    <span class="tag">Screaming Frog</span>
+                </div>
+            </div>
+
+            <div class="skills-section">
+                <h4>Other</h4>
+                <div class="skill-tags">
+                    <span class="tag">WordPress</span>
+                    <span class="tag">HTML/CSS</span>
+                    <span class="tag">Content Strategy</span>
+                    <span class="tag">Analytics</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+        <div class="content-wrapper">
+            <h2>Let's work <span class="highlight">together.</span></h2>
+            <p style="color: var(--text-muted); font-size: 1.1rem; margin: 2rem 0;">
+                Ready to climb the rankings? Get in touch.
+            </p>
+            
+            <div class="contact-grid">
+                <a href="mailto:your-email@example.com">Email</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                <a href="https://twitter.com" target="_blank">Twitter</a>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="mailto:your-email@example.com" class="btn-primary">Start a Project</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 Shaikh Sarim. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // PARTICLE ANIMATION
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Particle class
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.6 + 0.2;
+                this.originalOpacity = this.opacity;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Boundary wrapping
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                // Purple/Magenta glow color
+                ctx.fillStyle = `rgba(167, 139, 250, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Add glow effect
+                ctx.strokeStyle = `rgba(124, 58, 237, ${this.opacity * 0.5})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+        }
+
+        const particles = [];
+        const particleCount = 60;
+
+        // Initialize particles
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        // Draw connections between nearby particles
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 150) {
+                        const opacity = 0.15 * (1 - distance / 150);
+                        ctx.strokeStyle = `rgba(124, 58, 237, ${opacity})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Mouse interaction
+        let mouseX = null;
+        let mouseY = null;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Pulse particles on mouse interaction
+        function pulseParticles() {
+            if (mouseX === null || mouseY === null) return;
+
+            particles.forEach(particle => {
+                const dx = particle.x - mouseX;
+                const dy = particle.y - mouseY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 100) {
+                    particle.opacity = Math.min(particle.opacity + 0.1, 1);
+                } else {
+                    particle.opacity = Math.max(particle.opacity - 0.02, particle.originalOpacity);
+                }
+            });
+        }
+
+        // Animation loop
+        function animate() {
+            // Clear canvas with fade effect
+            ctx.fillStyle = 'rgba(10, 14, 39, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            drawConnections();
+            pulseParticles();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
